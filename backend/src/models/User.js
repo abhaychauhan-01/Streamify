@@ -57,7 +57,11 @@ friends:[{
  catch (err){
 next(err);
  }
- })
+ });
+ userSchema.methods.matchPassword=async function (enteredpass){
+    const ispass=await bcrypt.compare(enteredpass,this.password);
+    return ispass;
+ }
  const User=mongoose.model("User",userSchema);
  
  // password hashing to store it safely using presave hook

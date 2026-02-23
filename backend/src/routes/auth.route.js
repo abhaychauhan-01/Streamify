@@ -8,4 +8,9 @@ router.post("/login",login)
 router.post("/logout",logout)
 router.post("/onboarding",protectedRoute,onboard)
 
+//checks if user is logged in or not
+router.get("/me",protectedRoute,(req,res)=>{
+    res.status(200).json({success:true,user:req.user});
+})
+
 export default router;

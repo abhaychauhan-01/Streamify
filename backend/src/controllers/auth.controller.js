@@ -30,7 +30,7 @@ export async function signup(req, res) {
       name:newUser.fullName,
       image:newUser.profilePic ||"",
      });
-      console.log(`Stream User Created for${newUser.fullName}`)
+      console.log(`Stream User Created for ${newUser.fullName}`)
     } catch (error) {
       console.log("Error Creating stream User",error);
     }

@@ -1,12 +1,13 @@
 import {StreamChat} from "stream-chat";
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 // creating the user in Stream platform
-const apikey =process.env.STEAM_API_KEY;
-const apisecret=process.env.STEAM_API_SECRET;
-if(!apikey||!apisecret){
-    console.error("Stream API key or Secret is missing");
-
+const apikey =process.env.STREAM_API_KEY;
+const apisecret=process.env.STREAM_API_SECRET;
+if (!apikey || !apisecret) {
+    console.log("Stream API key or Secret is missing");
 }
 
 const streamClient =StreamChat.getInstance(apikey,apisecret);
@@ -25,5 +26,5 @@ export const generateStreamToken=(userId)=>{ try {// ensure userid is a string
 
 } catch (error) {
     console.error("Error generating Stream token",error);
-    resizeBy.status(500).json({message:"Internal Server Error"});
+    res.status(500).json({message:"Internal Server Error"});
 }};

@@ -2,17 +2,27 @@ import React from "react";
 import { useState } from "react";
 import { ShipWheelIcon } from "lucide-react";
 import { Link } from "react-router";
-import {useMutation} from "@tanstack/react-query"
+import {useMutation,useQueryClient} from "@tanstack/react-query";
+import {axiosInstance} from "../lib/axios"
+import { signup } from "../lib/api.js";
 const SignUpPage = () => {
   const [signupData, setSignupData] = useState({
     fullName: "",
     email: "",
     password: "",
   });
-  const {mutate , isPending, error}=useMutation();
+  const queryClient = useQueryClient();
+  const {mutate:signupMutation , isPending, error}=useMutation({
+    mutationFn:signup,
+    
+    onSuccess:()=>{queryClient.invalidateQueries({queryKey:["authUser"]});
+
+    }
+  });
 
   const handleSignUp = (e) => {
     e.preventDefault();
+    signupMutation(signupData);
   };
   return (
     <div
@@ -29,6 +39,13 @@ const SignUpPage = () => {
               Streamfiy
             </span>
           </div>
+          {/*Error message if any */}
+          {error &&(<div className="alert alert-error mb-4">
+            <span>
+              {error.response.data.message}
+            </span>
+          </div>
+        )}
           <div className="w-full">
             <form onSubmit={handleSignUp}>
               <div className="space-y-4">
@@ -117,8 +134,14 @@ const SignUpPage = () => {
                   </div>
                 </div>
                 <button className="btn btn-primary w-full" type="submit">
-                  {" "}
-                  Create Account
+                  {isPending ?(
+                    <>
+                    <span className="loading loading-spinner loading-xs"></span>
+                      Loading...
+                    
+                    </>):("Create Account"
+                  )}
+                  
                 </button>
                 <div className="text-center mt-4">
                   <p className="text-sm">

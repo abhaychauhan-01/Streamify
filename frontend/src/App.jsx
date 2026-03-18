@@ -11,10 +11,11 @@ import  {Toaster} from "react-hot-toast";
 import { BrowserRouter } from 'react-router';
 import {useQuery,QueryClient,QueryClientProvider,} from '@tanstack/react-query';
 import { axiosInstance } from './lib/axios.js';
+import PageLoader from './components/PageLoader.jsx';
 
 // use query when you want fetch some data you can do it using usestate + useref but it will be easy when you use useQuery
 const App = () => {
-  const {data:authData , isLoading,error}=useQuery({
+  const {data:authData , isLoading}=useQuery({
     queryKey:["authUser"],
     queryFn: async ()=>{
       const res=await axiosInstance.get("/auth/me");
@@ -22,6 +23,7 @@ const App = () => {
     }
   });
   const authUser=authData?.user
+  if(true) return <PageLoader/>;
   return (
     <div className=' h-screen' data-theme='night'>
     

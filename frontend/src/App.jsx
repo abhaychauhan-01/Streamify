@@ -12,18 +12,12 @@ import { BrowserRouter } from 'react-router';
 import {useQuery,QueryClient,QueryClientProvider,} from '@tanstack/react-query';
 import { axiosInstance } from './lib/axios.js';
 import PageLoader from './components/PageLoader.jsx';
+import { getAuthUser } from './lib/api.js';
 
 // use query when you want fetch some data you can do it using usestate + useref but it will be easy when you use useQuery
 const App = () => {
-  const {data:authData , isLoading}=useQuery({
-    queryKey:["authUser"],
-    queryFn: async ()=>{
-      const res=await axiosInstance.get("/auth/me");
-      return res.data;
-    }
-  });
-  const authUser=authData?.user
-  if(true) return <PageLoader/>;
+const {isLoading,authUser}=useAuthUser();
+  if(isLoading) return <PageLoader/>;
   return (
     <div className=' h-screen' data-theme='night'>
     

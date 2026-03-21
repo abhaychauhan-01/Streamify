@@ -17,12 +17,16 @@ import { getAuthUser } from './lib/api.js';
 // use query when you want fetch some data you can do it using usestate + useref but it will be easy when you use useQuery
 const App = () => {
 const {isLoading,authUser}=useAuthUser();
+const isAuthenticated=Boolean(authUser)
+const isOnboarded =authUser?.isOnboarded
   if(isLoading) return <PageLoader/>;
   return (
     <div className=' h-screen' data-theme='night'>
     
       <Routes>
-        <Route path="/" element={authUser ? <HomePage/> : <Navigate to ="/login"/>}/>
+        <Route path="/" element={isAuthenticated && isOnboarded ? (<HomePage/>):(
+          <Navigate to={!isAuthenticated ? "/login": "/onboarding"}/>
+        )}/>
         <Route path="/login" element={!authUser ?<LoginPage/>: <Navigate to ="/"/>}/>
         <Route path="/signup" element={!authUser?<SignUpPage/>: <Navigate to="/"/>}/>
         <Route path="/notification" element={authUser?<NotificationPage/>:<Navigate to="/login"/>}/>

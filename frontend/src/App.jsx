@@ -13,6 +13,7 @@ import {useQuery,QueryClient,QueryClientProvider,} from '@tanstack/react-query';
 import { axiosInstance } from './lib/axios.js';
 import PageLoader from './components/PageLoader.jsx';
 import { getAuthUser } from './lib/api.js';
+import useAuthUser from './hooks/useAuthUser';
 
 // use query when you want fetch some data you can do it using usestate + useref but it will be easy when you use useQuery
 const App = () => {

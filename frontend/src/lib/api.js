@@ -9,7 +9,7 @@ export const login = async (data) => {
   return response.data;
 };
 export const logout = async () => {
-  const response = await axiosInstance.post("/auth/logout", data);
+  const response = await axiosInstance.post("/auth/logout");
   return response.data;
 };
 export const getAuthUser = async () => {
@@ -17,10 +17,7 @@ export const getAuthUser = async () => {
     const res = await axiosInstance.get("/auth/me");
     return res.data;
   } catch (err) {
-    if (err.response?.status === 401) {
-      return null; // ✅ user not logged in (normal case)
-    }
-    throw err; // real error
+    return null;
   }
 };
 export const completeOnboarding =async (userDate)=>{

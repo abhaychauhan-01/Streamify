@@ -109,7 +109,7 @@ export async function getFriendRequests(req,res){
         status:"pending",
 
     }).populate("sender","fullName profilePic nativeLanguage learningLanguage");// populate is used so that we can grab all the fields of sender not just the id
-        const acceptedRequest= await friendRequest.find({
+        const acceptedRequest= await FriendRequest.find({
             sender:req.user.id,
             status:"accepted",
 

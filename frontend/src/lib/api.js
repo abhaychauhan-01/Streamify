@@ -1,3 +1,4 @@
+import axios from "axios";
 import { axiosInstance } from "./axios";
 
 export const signup = async (data) => {
@@ -41,4 +42,14 @@ export async function sendFriendRequest(userId) {
 export const completeOnboarding =async (userDate)=>{
   const response= await axiosInstance.post("/auth/onboarding",userDate);
   return response.data;
+}
+export async function getFriendRequest(){
+  const res=await axiosInstance.get("/users/friend-requests");
+  return res.data;
+
+}
+export async function acceptFriendRequest(reqId){
+  const res=await axiosInstance.get(`/users/friend-requests/${reqId}/accept`);
+  return res.data;
+
 }
